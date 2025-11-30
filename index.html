@@ -3,23 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>京都旅人 Zen - 行程 App</title>
+    <title>京阪奈之旅 Zen</title>
     
     <!-- 💥 給 iPhone 的關鍵設定：設定圖示和全螢幕模式 💥 -->
-    <!-- 啟用全螢幕模式，隱藏 Safari 瀏覽器的網址列 -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <!-- 設定主畫面圖示的標題文字 -->
-    <meta name="apple-mobile-web-app-title" content="京都 Zen">
+    <meta name="apple-mobile-web-app-title" content="京阪之旅">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <!-- 設定 iPhone 主畫面的圖示 (ICON) -->
-    <!-- 這裡使用 Google Placehold 製作一個簡單的抹茶綠 ICON -->
-    <link rel="apple-touch-icon" href="https://placehold.co/180x180/7F9A7F/ffffff?text=%E4%BA%AC%E9%83%BD%0A%F0%9F%8C%B9">
+    <link rel="apple-touch-icon" href="https://placehold.co/180x180/7F9A7F/ffffff?text=%E4%BA%AC%E9%83%BD%0A%E5%A4%A7%E9%98%AA">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- React and ReactDOM CDNs -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <!-- Babel Standalone for JSX in browser (Crucial for Vercel Static Deploy) -->
+    <!-- Babel Standalone for JSX in browser -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Custom Styles and Fonts -->
     <style>
@@ -61,20 +59,27 @@
         const { useState } = React;
         const { createRoot } = ReactDOM;
 
-        // --- 你的京都行程資料 (Customized Data) ---
+        // --- 行程資料 (Updated Data) ---
 
         const tripEssentials = {
           flight: {
-            outbound: { code: 'CI156', date: '2024/12/11', time: '08:05', from: 'TPE', to: 'KIX', terminal: 'T2' },
-            inbound: { code: 'CI157', date: '2024/12/xx', time: '13:10', from: 'KIX', to: 'TPE', terminal: 'T1' }
+            outbound: { code: 'CI156', date: '12/11 (三)', time: '08:05', from: 'TPE', to: 'KIX', terminal: 'T2' },
+            inbound: { code: 'CI1xx', date: '12/15 (日)', time: '待定', from: 'KIX', to: 'TPE', terminal: 'T1' }
           },
           accommodation: [
             {
               name: 'Umekoji Potel Kyoto',
               address: 'Kyoto, Shimogyo Ward, Kankijicho, 15',
               checkIn: '12/11',
-              checkOut: '12/13', // 假設住兩晚
-              bookingId: 'POTEL-8821' // 範例代號
+              checkOut: '12/13', 
+              bookingId: 'POTEL-8821'
+            },
+            {
+              name: '和空 下寺町 (WAQOO Shitaderamachi)',
+              address: '大阪府大阪市天王寺区下寺町2丁目5-12',
+              checkIn: '12/13',
+              checkOut: '12/15', 
+              bookingId: 'WAQOO-5566'
             }
           ]
         };
@@ -92,7 +97,7 @@
                 type: "transport",
                 title: "抵達關西機場 & HARUKA",
                 location: "Kansai Airport Station",
-                notes: "入境後前往 2F 連接通道搭乘 JR。建議事先買好 HARUKA 票券或使用 ICOCA。",
+                notes: "入境後前往 2F 連接通道搭乘 JR HARUKA 特急。建議事先買好票券。",
                 tags: ["目的地：京都車站", "車程約 80 分"],
                 reservation: null
               },
@@ -102,8 +107,8 @@
                 type: "spot",
                 title: "Umekoji Potel Kyoto (放行李)",
                 location: "Umekoji Potel Kyoto",
-                notes: "位於梅小路公園旁，非常有設計感的飯店。放完行李後可搭公車或計程車前往四條烏丸。",
-                tags: ["飯店 Check-in", "梅小路公園"],
+                notes: "位於梅小路公園旁。放完行李後前往四條烏丸。",
+                tags: ["飯店 Check-in"],
                 reservation: null
               },
               {
@@ -112,8 +117,8 @@
                 type: "food",
                 title: "烏丸午餐：拉麵巡禮",
                 location: "Karasuma Station",
-                notes: "烏丸附近名店推薦：「麺屋 猪一」(清淡系) 或 「和釀良麵 すがり」(沾麵，很有隱密感)。",
-                tags: ["熱門拉麵激戰區"],
+                notes: "烏丸附近找拉麵吃。推薦：「麺屋 猪一」或「和釀良麵 すがり」。",
+                tags: ["拉麵激戰區"],
                 reservation: null
               },
               {
@@ -122,8 +127,8 @@
                 type: "spot",
                 title: "清水寺 & 二年坂",
                 location: "Kiyomizu-dera",
-                notes: "傍晚時分遊客稍減，可從二年坂一路散步上去。記得在仁王門前拍照。",
-                tags: ["世界遺產", "必買：七味粉"],
+                notes: "傍晚散步行程。從二年坂一路逛上去，感受京都古街氛圍。",
+                tags: ["世界遺產", "好拍照"],
                 reservation: null
               },
               {
@@ -132,7 +137,7 @@
                 type: "food",
                 title: "晚餐：iroha 北店",
                 location: "Iroha Kitamise, Kyoto",
-                notes: "經典的京都壽喜燒老店。將糖與醬油直接淋在肉上煎烤是關西風特色。",
+                notes: "京都老舖壽喜燒。享受道地的關西風味。",
                 tags: ["必吃壽喜燒", "重要預約"],
                 reservation: "IROHA-RESV"
               },
@@ -142,8 +147,8 @@
                 type: "spot",
                 title: "夜生活：Ice or Bar",
                 location: "Ice at 21:00 - Kyoto Kawaramachi",
-                notes: "選項 A：Ice at 21:00 (夜間聖代專賣店) \n選項 B：Cocktail Stand FREAK (站立式酒吧，氣氛輕鬆)。",
-                tags: ["大人系甜點", "微醺京都"],
+                notes: "選項 A：Ice at 21:00 (夜間聖代) \n選項 B：Cocktail Stand FREAK (站立式酒吧)。",
+                tags: ["消夜", "微醺"],
                 reservation: null
               }
             ]
@@ -160,8 +165,8 @@
                 type: "food",
                 title: "Amam Dacotan & here Kyoto",
                 location: "Amam Dacotan Kyoto",
-                notes: "福岡來的超人氣麵包店，請務必早起排隊！買完順路去 here Kyoto 買咖啡與可麗露。",
-                tags: ["排隊名店", "必吃：明太子法棍"],
+                notes: "超人氣排隊麵包店！買完順路去 here Kyoto 買咖啡。",
+                tags: ["排隊名店", "早餐"],
                 reservation: null
               },
               {
@@ -170,38 +175,38 @@
                 type: "spot",
                 title: "公園早餐時光",
                 location: "96 Honnojicho, Nakagyo Ward",
-                notes: "買完戰利品後，到附近的公園野餐享受早晨。",
-                tags: ["野餐", "City Walk"],
+                notes: "買完戰利品後，到附近的公園享用早餐。",
+                tags: ["City Walk"],
                 reservation: null
               },
               {
                 id: 203,
                 time: "11:00",
                 type: "spot",
-                title: "下鴨神社 (賀茂御祖神社)",
+                title: "下鴨神社",
                 location: "Shimogamo Shrine",
-                notes: "穿越糺之森，感受京都最古老神社的靈氣。這裡的蕾絲御守非常有名。",
-                tags: ["世界遺產", "求姻緣/美麗"],
+                notes: "京都最古老的神社之一，周圍是糺之森。",
+                tags: ["世界遺產"],
                 reservation: null
               },
               {
                 id: 204,
                 time: "13:00",
                 type: "spot",
-                title: "金閣寺 (鹿苑寺)",
+                title: "金閣寺",
                 location: "Kinkaku-ji",
-                notes: "建議從下鴨神社搭計程車或公車(205號)前往。金碧輝煌的舍利殿倒映在鏡湖池是必拍。",
+                notes: "參觀完金閣寺後，準備移動前往嵐山。",
                 tags: ["經典地標"],
                 reservation: null
               },
               {
                 id: 205,
                 time: "14:30",
-                type: "transport",
-                title: "前往嵐山 & 午餐",
+                type: "food",
+                title: "嵐山午餐",
                 location: "Saga-Arashiyama Station",
-                notes: "從「円町站」搭 JR 到「嵯峨嵐山站」。午餐推薦：嵐山吉村 (蕎麥麵) 或 廣川鰻魚飯 (需排隊)。",
-                tags: ["嵐山美食"],
+                notes: "在嵐山站附近找餐廳。推薦：嵐山吉村(蕎麥麵) 或 鯛匠HANANA。",
+                tags: ["嵐山美食", "餐廳待定"],
                 reservation: null
               },
               {
@@ -210,8 +215,8 @@
                 type: "food",
                 title: "八十八良葉舍 嵐山",
                 location: "Hachiju Hachiya Arashiyama",
-                notes: "非常講究的抹茶專賣店。推薦點抹茶拿鐵，看店員現場手刷抹茶。",
-                tags: ["抹茶控必去", "下午茶"],
+                notes: "喝杯抹茶休息一下，為晚點的小火車做準備。",
+                tags: ["抹茶控必去"],
                 reservation: null
               },
               {
@@ -220,7 +225,7 @@
                 type: "transport",
                 title: "JR 移動：嵯峨嵐山 -> 馬堀",
                 location: "Umahori Station",
-                notes: "搭乘 JR 山陰本線前往馬堀站 (Umahori)。下車後步行約 10 分鐘至「龜岡小火車站」。",
+                notes: "搭乘 JR 山陰本線前往馬堀站。下車後步行至「龜岡小火車站」。",
                 tags: ["注意發車時間", "步行導航"],
                 reservation: null
               },
@@ -230,17 +235,159 @@
                 type: "spot",
                 title: "嵐山小火車 (龜岡發)",
                 location: "Torokko Kameoka Station",
-                notes: "搭乘 Sagano Romantic Train 回到嵐山。夕陽時分的保津川峽谷非常美。",
-                tags: ["雙號座位景觀佳", "第5車廂為開放式"],
+                notes: "搭乘復古小火車回到嵐山，欣賞保津川峽谷。",
+                tags: ["景觀列車"],
                 reservation: "TICKET-REQUIRED"
+              },
+              {
+                id: 209,
+                time: "19:00",
+                type: "food",
+                title: "晚餐：魚々鶏夜 (Totoriya)",
+                location: "Totoriya Kyoto",
+                notes: "嵐山附近的居酒屋/料理店，享受晚餐。",
+                tags: ["必吃美食"],
+                reservation: null
+              }
+            ]
+          },
+          {
+            day: 3,
+            date: "12/13 (五)",
+            location: "大阪・天王寺/梅田",
+            weather: { type: "cloudy", temp: "11°C", desc: "多雲轉晴" },
+            items: [
+              {
+                id: 301,
+                time: "09:00",
+                type: "transport",
+                title: "HARUKA -> 天王寺",
+                location: "Kyoto Station",
+                notes: "搭乘 HARUKA 前往大阪天王寺站。早餐若未定可在車站買便當。",
+                tags: ["移動日"],
+                reservation: null
+              },
+              {
+                id: 302,
+                time: "10:30",
+                type: "spot",
+                title: "和空 下寺町 (Check-in)",
+                location: "WAQOO Shitaderamachi",
+                notes: "先到飯店寄放行李。這是一間宿坊風格的飯店，很有特色。",
+                tags: ["飯店放行李"],
+                reservation: null
+              },
+              {
+                id: 303,
+                time: "11:30",
+                type: "spot",
+                title: "大鳥大社",
+                location: "Otori Taisha",
+                notes: "搭乘 JR 阪和線至「鳳站」。參拜並購買御守 (以強運、交通安全聞名)。",
+                tags: ["古老神社", "買御守"],
+                reservation: null
+              },
+              {
+                id: 304,
+                time: "13:30",
+                type: "shopping",
+                title: "梅田午餐 & 逛街",
+                location: "Osaka Station",
+                notes: "搭車回梅田(大阪站)。午餐在附近解決，下午逛百貨公司 (LUCUA, Grand Front)。",
+                tags: ["購物", "餐廳待定"],
+                reservation: null
+              },
+              {
+                id: 305,
+                time: "18:30",
+                type: "food",
+                title: "晚餐：Yakinikuen Ning",
+                location: "Yakinikuen Ning Minami Horie",
+                notes: "位於南堀江的燒肉店 (難波附近)。",
+                tags: ["必吃燒肉", "需預約"],
+                reservation: "RESV-NING"
+              }
+            ]
+          },
+          {
+            day: 4,
+            date: "12/14 (六)",
+            location: "大阪・環球影城",
+            weather: { type: "sunny", temp: "12°C", desc: "晴朗好天氣" },
+            items: [
+              {
+                id: 401,
+                time: "07:30",
+                type: "food",
+                title: "早餐：金龍拉麵",
+                location: "Kinryu Ramen Dotonbori",
+                notes: "道頓堀經典地標，24小時營業。快速吃完早餐出發。",
+                tags: ["大阪名物"],
+                reservation: null
+              },
+              {
+                id: 402,
+                time: "08:30",
+                type: "spot",
+                title: "日本環球影城 USJ",
+                location: "Universal Studios Japan",
+                notes: "整日行程！記得先抽任天堂/哈利波特整理券。玩到晚上！",
+                tags: ["整日狂歡", "快速通關"],
+                reservation: "USJ-TICKET"
+              },
+              {
+                id: 403,
+                time: "21:00",
+                type: "food",
+                title: "晚餐：力丸炉ばた焼 漁火",
+                location: "Rikimaru Robata Isaribi",
+                notes: "位於梅田附近的爐端燒，氣氛非常熱鬧，適合玩完 USJ 後大吃一頓。",
+                tags: ["爐端燒", "氣氛佳"],
+                reservation: null
+              }
+            ]
+          },
+          {
+            day: 5,
+            date: "12/15 (日)",
+            location: "大阪・難波/返程",
+            weather: { type: "sunny", temp: "13°C", desc: "舒適晴天" },
+            items: [
+              {
+                id: 501,
+                time: "09:00",
+                type: "food",
+                title: "早餐：木津市場",
+                location: "Osaka Kizu Wholesale Market",
+                notes: "當地人的廚房。推薦吃新鮮生魚片、水果。",
+                tags: ["新鮮海產", "必逛市場"],
+                reservation: null
+              },
+              {
+                id: 502,
+                time: "10:30",
+                type: "spot",
+                title: "大阪城公園",
+                location: "Osaka Castle",
+                notes: "大阪地標，去天守閣前面拍張照留念。",
+                tags: ["拍照打卡"],
+                reservation: null
+              },
+              {
+                id: 503,
+                time: "12:00",
+                type: "transport",
+                title: "回飯店 Check-out -> 機場",
+                location: "WAQOO Shitaderamachi",
+                notes: "回和空下寺町拿行李，前往關西機場 (KIX) 準備搭機。",
+                tags: ["回程", "預留3小時到機場"],
+                reservation: null
               }
             ]
           }
         ];
 
         // --- 元件 (Components) ---
-        // 替換 Lucide React Icons 為 Emoji 或基本符號，以確保在單一 HTML 檔案中運行
-        // 避免使用 Lucide-react import 導致 Vercel build 失敗
 
         const Sun = () => <span role="img" aria-label="sun">☀️</span>;
         const CloudRain = () => <span role="img" aria-label="rain">🌧️</span>;
@@ -256,6 +403,7 @@
         const Navigation = () => <span role="img" aria-label="navigation">🧭</span>;
         const ChevronRight = () => <span className="font-bold text-xl leading-none">&rarr;</span>; 
         const ShoppingBag = () => <span role="img" aria-label="shopping">🛍️</span>;
+        const Wine = () => <span role="img" aria-label="wine">🍷</span>;
 
 
         const WeatherIcon = ({ type }) => {
@@ -297,8 +445,8 @@
 
         const Tag = ({ text }) => {
           let style = "bg-stone-200 text-stone-600";
-          if (text.includes("必吃") || text.includes("必買") || text.includes("重要")) style = "bg-red-50 text-red-600 border border-red-100 font-medium";
-          if (text.includes("預約") || text.includes("車程") || text.includes("座位")) style = "bg-indigo-50 text-indigo-600 border border-indigo-100 font-medium";
+          if (text.includes("必吃") || text.includes("必買") || text.includes("重要") || text.includes("燒肉")) style = "bg-red-50 text-red-600 border border-red-100 font-medium";
+          if (text.includes("預約") || text.includes("車程") || text.includes("座位") || text.includes("移動")) style = "bg-indigo-50 text-indigo-600 border border-indigo-100 font-medium";
           
           return (
             <span className={`text-xs px-2 py-1 rounded-md mr-2 mb-2 inline-block ${style}`}>
@@ -311,6 +459,10 @@
           let query = item.title + " " + item.location;
           if (item.title.includes("馬堀")) {
             query = "Umahori Station to Torokko Kameoka Station";
+          }
+          // Day 3 大鳥大社導航優化
+          if (item.title.includes("大鳥大社")) {
+            query = "Otori Taisha";
           }
 
           const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
@@ -469,7 +621,7 @@
               <header className="sticky top-0 z-50 bg-[#FDFCF8]/90 backdrop-blur-md px-6 pt-12 pb-2 border-b border-stone-100">
                 <div className="flex justify-between items-center mb-1">
                   <h1 className="text-2xl font-black tracking-tight text-stone-800">
-                    {activeTab === 'itinerary' ? 'Kyoto Trip' : 'Trip Essentials'}
+                    {activeTab === 'itinerary' ? '京阪之旅' : '行程確認單'}
                   </h1>
                   {activeTab === 'itinerary' && (
                      <div className="flex items-center space-x-1 bg-white border border-stone-200 px-3 py-1 rounded-full shadow-sm">
@@ -481,7 +633,7 @@
                 <p className="text-stone-400 text-sm font-medium">
                   {activeTab === 'itinerary' 
                     ? `${currentDayData.location} • ${currentDayData.weather.desc}` 
-                    : '行程確認單'}
+                    : '住宿與航班'}
                 </p>
               </header>
 
